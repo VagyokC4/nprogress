@@ -1,8 +1,8 @@
 {
   "name": "nprogress",
-  "repo": "rstacruz/nprogress",
+  "repo": "vagyokc4/nprogress",
   "description": "slim progress bar",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "keywords": [
     "progress",
     "bar",
