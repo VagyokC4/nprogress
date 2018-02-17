@@ -94,10 +94,14 @@
             opacity: 0
           });
           setTimeout(function() {
-            NProgress.remove();
+            // Remove bar if another task hasn’t started during the animation
+            if (NProgress.status == null) {
+              NProgress.remove();
+            }
+
             next();
           }, speed);
-        }, speed);
+        }, 0);
       } else {
         setTimeout(next, speed);
       }
