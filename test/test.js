@@ -77,12 +77,20 @@
       });
 
       it('must be attached to specified parent', function() {
-        var test = $('<div>', {id: 'test'}).appendTo('body');
+        var selectorParent = $('<div>', {id: 'test'}).appendTo('body');
         NProgress.configure({parent: '#test'});
         NProgress.start();
-        assert.isTrue($("#nprogress").parent().is(test));
+        assert.isTrue($("#nprogress").parent().is(selectorParent));
         assert.isTrue($(NProgress.settings.parent).hasClass("nprogress-custom-parent"));
       });
+
+      it('can specify an HTMLElement as a parent', function() {
+        var elementParent = $('<div>Hello</div>').appendTo('body');
+        NProgress.configure({parent: elementParent[0] });
+        NProgress.start();
+        assert.isTrue($("#nprogress").parent().is(elementParent));
+        assert.isTrue($(NProgress.settings.parent).hasClass("nprogress-custom-parent"));
+      })
     });
 
     // ----
@@ -104,11 +112,21 @@
     // ----
 
     describe('.remove()', function() {
-      it('should be removed from the parent', function() {
+      it('should be removed from the parent (selector)', function() {
         NProgress.set(1);
         NProgress.remove();
 
         var parent = $(NProgress.settings.parent);
+        assert.isFalse(parent.hasClass('nprogress-custom-parent'));
+        assert.equal(parent.find('#nprogress').length, 0);
+      });
+
+      it('should be removed from the parent (element)', function() {
+        var parent = $('<div>').appendTo('body');
+        NProgress.configure({ parent: parent[0] });
+        NProgress.set(1);
+        NProgress.remove();
+
         assert.isFalse(parent.hasClass('nprogress-custom-parent'));
         assert.equal(parent.find('#nprogress').length, 0);
       });
